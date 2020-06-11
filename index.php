@@ -25,11 +25,12 @@
       }
       .container {
         float: left;
-        width: 670px;
+        width: 870px;
         height: 652px;
       }
       .container2 {
         float: left;
+        width: 400px;
         margin: 15px;
         padding: 0;
         display:flex; 
@@ -77,27 +78,20 @@
       border-collapse : collapse;
     }
     th, td{
-      width : 80px;
       text-align : center;
       border : 1px solid black;
     }
-    .area {
-      position: absolute;
-      background: #fff;
-      border: 1px solid #888;
-      border-radius: 3px;
-      font-size: 12px;
-      top: -5px;
-      left: 15px;
-      padding:2px;
-    }
     </style>
     <title>COVID-19</title>
+   
 </head>
 <body>
+
     <ul id="nav-ul"class="nav-container">
-      <li class="nav-item"><a style="text_align:left">코로나 맵</a></li>
-      <li class="nav-item"><a style="text_align:right">기준</a></li>
+      <li class="nav-item"><a href="">이재안</a></li>
+      <li class="nav-item"><a href="">이재건</a></li>
+      <li class="nav-item"><a href="">이희수</a></li>
+      <li class="nav-item"><a href="">신재원</a></li>
     </ul>
   </nav>
 <!-- 지도를 표시할 div 입니다 -->
@@ -106,13 +100,14 @@
       <div id="map" class="container"></div>
   </ul>
   <ul class="cmap">
-      <iframe longdesc="covid simulation" width="1024" height="668" frameborder="0" scrolling="no" name="NeBoard" onLoad="ResizeFrame('NeBoard');" id="img" src="https://unity-technologies.github.io/unitysimulation-coronavirus-example-player/"></iframe>
+      <iframe longdesc="covid simulation" width="1024" height="768" frameborder="0" scrolling="no" name="NeBoard" onLoad="ResizeFrame('NeBoard');" id="img" src="https://unity-technologies.github.io/unitysimulation-coronavirus-example-player/"></iframe>
   </ul>
   <ul>
     <div class="flourish-embed flourish-bar-chart-race" data-src="visualisation/2675613" data-url="https://flo.uri.sh/visualisation/2675613/embed"><script src="https://public.flourish.studio/resources/embed.js"></script></div>
   </ul>
 </div>
 <div class="container2">
+  <div>
   <?php
     ini_set("allow_url_fopen",1);
     include "simple_html_dom.php";
@@ -129,27 +124,34 @@
             </tr>
             <?php
         }
+        
     }?>
     </table>
-</div>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8ccdb69f940b7bb042bad7353b9fe269"></script>
-<script>
 
+<a href="http://www.busan.go.kr/corona19/index">출처 : http://www.busan.go.kr/corona19/index</a>
+  </div>
+  
+</div>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=094c4447e3c1f889a8c14319602db9d5"></script>
+
+<script>
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = { 
-        center: new kakao.maps.LatLng(36.189320, 128.003166), // 지도의 중심좌표
-        level: 13 // 지도의 확대 레벨
+        center: new kakao.maps.LatLng(35.179791, 129.074975), // 지도의 중심좌표
+        level: 9 // 지도의 확대 레벨
         
     };
+var markerPosition  = {
+  title : ''
+}
 // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-var map = new kakao.maps.Map(mapContainer, mapOption),
-    customOverlay = new kakao.maps.CustomOverlay({}),
-    infowindow = new kakao.maps.InfoWindow({removable: true});
+var map = new kakao.maps.Map(mapContainer, mapOption);
+var marker = new kakao.maps.Marker({
+    position: markerPosition
+});
 
-   
-    
-//map.setDraggable(false);
-//map.setZoomable(false);
+map.setDraggable(false);
+map.setZoomable(false);
 </script>
 </body>
 </html>
