@@ -132,7 +132,7 @@
   </div>
   
 </div>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f6e4b36ec6c88cd63ebbe33a1dda73f2"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8ccdb69f940b7bb042bad7353b9fe269"></script>
 
 <script>
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
