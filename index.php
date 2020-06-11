@@ -147,9 +147,7 @@ var map = new kakao.maps.Map(mapContainer, mapOption),
     customOverlay = new kakao.maps.CustomOverlay({}),
     infowindow = new kakao.maps.InfoWindow({removable: true});
 
-
-//include "korea.geojson"
-    $.getJSON("korea.geojson", function(geojson) {
+    $.getJSON("resources/json/seoul_gson.geojson", function(geojson) {
  
  var data = geojson.features;
  var coordinates = [];    //좌표 저장할 배열
@@ -158,7 +156,7 @@ var map = new kakao.maps.Map(mapContainer, mapOption),
  $.each(data, function(index, val) {
 
      coordinates = val.geometry.coordinates;
-     name = val.properties.CTP_KOR_NM;
+     name = val.properties.CTP_ENG_NM;
      
      displayArea(coordinates, name);
 
@@ -179,11 +177,11 @@ function displayArea(coordinates, name) {
      point.x = coordinate[1];
      point.y = coordinate[0];
      points.push(point);
-     path.push(new kakao.maps.LatLng(coordinate[1], coordinate[0]));            //new kakao.maps.LatLng가 없으면 인식을 못해서 path 배열에 추가
+     path.push(new daum.maps.LatLng(coordinate[1], coordinate[0]));            //new daum.maps.LatLng가 없으면 인식을 못해서 path 배열에 추가
  })
  
  // 다각형을 생성합니다 
- var polygon = new kakao.maps.Polygon({
+ var polygon = new daum.maps.Polygon({
      map : map, // 다각형을 표시할 지도 객체
      path : path,
      strokeWeight : 2,
@@ -197,7 +195,7 @@ function displayArea(coordinates, name) {
 
  // 다각형에 mouseover 이벤트를 등록하고 이벤트가 발생하면 폴리곤의 채움색을 변경합니다 
  // 지역명을 표시하는 커스텀오버레이를 지도위에 표시합니다
- kakao.maps.event.addListener(polygon, 'mouseover', function(mouseEvent) {
+ daum.maps.event.addListener(polygon, 'mouseover', function(mouseEvent) {
      polygon.setOptions({
          fillColor : '#09f'
      });
@@ -209,14 +207,14 @@ function displayArea(coordinates, name) {
  });
 
  // 다각형에 mousemove 이벤트를 등록하고 이벤트가 발생하면 커스텀 오버레이의 위치를 변경합니다 
- kakao.maps.event.addListener(polygon, 'mousemove', function(mouseEvent) {
+ daum.maps.event.addListener(polygon, 'mousemove', function(mouseEvent) {
 
      customOverlay.setPosition(mouseEvent.latLng);
  });
 
  // 다각형에 mouseout 이벤트를 등록하고 이벤트가 발생하면 폴리곤의 채움색을 원래색으로 변경합니다
  // 커스텀 오버레이를 지도에서 제거합니다 
- kakao.maps.event.addListener(polygon, 'mouseout', function() {
+ daum.maps.event.addListener(polygon, 'mouseout', function() {
      polygon.setOptions({
          fillColor : '#fff'
      });
@@ -224,7 +222,7 @@ function displayArea(coordinates, name) {
  });
 
  // 다각형에 click 이벤트를 등록하고 이벤트가 발생하면 해당 지역 확대을 확대합니다.
- kakao.maps.event.addListener(polygon, 'click', function() {
+ daum.maps.event.addListener(polygon, 'click', function() {
      
      // 현재 지도 레벨에서 2레벨 확대한 레벨
      var level = map.getLevel()-2;
