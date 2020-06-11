@@ -131,8 +131,6 @@
         
     }?>
     </table>
-
-<a href="http://www.busan.go.kr/corona19/index">출처 : http://www.busan.go.kr/corona19/index</a>
   </div>
   
 </div>
