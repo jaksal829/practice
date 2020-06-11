@@ -116,7 +116,7 @@
   <?php
     ini_set("allow_url_fopen",1);
     include "simple_html_dom.php";
-    //include "korea.geojson";
+    include "korea.geojson";
     $data = file_get_html("http://ncov.mohw.go.kr/bdBoardList_Real.do?brdId=1&brdGubun=13&ncvContSeq=&contSeq=&board_id=&gubun=");
     ?><table><?php
     foreach($data->find("table") as $ul){
