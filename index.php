@@ -148,7 +148,7 @@ var map = new kakao.maps.Map(mapContainer, mapOption),
     infowindow = new kakao.maps.InfoWindow({removable: true});
 
 
-include "korea.geojson"
+//include "korea.geojson"
     $.getJSON("korea.geojson", function(geojson) {
  
  var data = geojson.features;
