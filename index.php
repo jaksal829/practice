@@ -25,12 +25,11 @@
       }
       .container {
         float: left;
-        width: 870px;
+        width: 670px;
         height: 652px;
       }
       .container2 {
         float: left;
-        width: 400px;
         margin: 15px;
         padding: 0;
         display:flex; 
@@ -78,8 +77,19 @@
       border-collapse : collapse;
     }
     th, td{
+      width : 80px;
       text-align : center;
       border : 1px solid black;
+    }
+    .area {
+      position: absolute;
+      background: #fff;
+      border: 1px solid #888;
+      border-radius: 3px;
+      font-size: 12px;
+      top: -5px;
+      left: 15px;
+      padding:2px;
     }
     </style>
     <title>COVID-19</title>
