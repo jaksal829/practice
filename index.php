@@ -63,12 +63,6 @@
     .nav-item{
       padding: 15px;
       cursor: pointer;
-      align: left;
-    }
-    .nav-item1{
-      padding: 15px;
-      cursor: pointer;
-      align: right;
     }
     .nav-item a{
       text-align: center;
@@ -87,15 +81,23 @@
       text-align : center;
       border : 1px solid black;
     }
+    .area {
+      position: absolute;
+      background: #fff;
+      border: 1px solid #888;
+      border-radius: 3px;
+      font-size: 12px;
+      top: -5px;
+      left: 15px;
+      padding:2px;
+    }
     </style>
     <title>COVID-19</title>
-   
 </head>
 <body>
-
     <ul id="nav-ul"class="nav-container">
       <li class="nav-item"><a style="text_align:left">코로나 맵</a></li>
-      <li class="nav-item1"><a style="text_align:right">기준</a></li>
+      <li class="nav-item"><a style="text_align:right">기준</a></li>
     </ul>
   </nav>
 <!-- 지도를 표시할 div 입니다 -->
@@ -111,10 +113,10 @@
   </ul>
 </div>
 <div class="container2">
-  <div>
   <?php
     ini_set("allow_url_fopen",1);
     include "simple_html_dom.php";
+    //include "korea.geojson";
     $data = file_get_html("http://ncov.mohw.go.kr/bdBoardList_Real.do?brdId=1&brdGubun=13&ncvContSeq=&contSeq=&board_id=&gubun=");
     ?><table><?php
     foreach($data->find("table") as $ul){
@@ -128,35 +130,24 @@
             </tr>
             <?php
         }
-        
     }?>
     </table>
-
-<a href="http://www.busan.go.kr/corona19/index">출처 : http://www.busan.go.kr/corona19/index</a>
-  </div>
-  
 </div>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8ccdb69f940b7bb042bad7353b9fe269"></script>
-
 <script>
+
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = { 
         center: new kakao.maps.LatLng(36.189320, 128.003166), // 지도의 중심좌표
         level: 13 // 지도의 확대 레벨
         
     };
-var markerPosition  = {
-  title : ''
-}
 // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-var map = new kakao.maps.Map(mapContainer, mapOption);
-var marker = new kakao.maps.Marker({
-    position: markerPosition
-});
+var map = new kakao.maps.Map(mapContainer, mapOption),
+    customOverlay = new kakao.maps.CustomOverlay({}),
+    infowindow = new kakao.maps.InfoWindow({removable: true});
 
-//map.setDraggable(false);
-//map.setZoomable(false);
-$.getJSON("TL_SCCO_CTPRVN.json", function(geojson) {
+    $.getJSON("korea.geojson", function(geojson) {
  
  var data = geojson.features;
  var coordinates = [];    //좌표 저장할 배열
@@ -165,7 +156,7 @@ $.getJSON("TL_SCCO_CTPRVN.json", function(geojson) {
  $.each(data, function(index, val) {
 
      coordinates = val.geometry.coordinates;
-     name = val.properties.SIG_KOR_NM;
+     name = val.properties.CTP_KOR_NM;
      
      displayArea(coordinates, name);
 
@@ -186,11 +177,11 @@ function displayArea(coordinates, name) {
      point.x = coordinate[1];
      point.y = coordinate[0];
      points.push(point);
-     path.push(new daum.maps.LatLng(coordinate[1], coordinate[0]));            //new daum.maps.LatLng가 없으면 인식을 못해서 path 배열에 추가
+     path.push(new kakao.maps.LatLng(coordinate[1], coordinate[0]));            //new kakao.maps.LatLng가 없으면 인식을 못해서 path 배열에 추가
  })
  
  // 다각형을 생성합니다 
- var polygon = new daum.maps.Polygon({
+ var polygon = new kakao.maps.Polygon({
      map : map, // 다각형을 표시할 지도 객체
      path : path,
      strokeWeight : 2,
@@ -204,7 +195,7 @@ function displayArea(coordinates, name) {
 
  // 다각형에 mouseover 이벤트를 등록하고 이벤트가 발생하면 폴리곤의 채움색을 변경합니다 
  // 지역명을 표시하는 커스텀오버레이를 지도위에 표시합니다
- daum.maps.event.addListener(polygon, 'mouseover', function(mouseEvent) {
+ kakao.maps.event.addListener(polygon, 'mouseover', function(mouseEvent) {
      polygon.setOptions({
          fillColor : '#09f'
      });
@@ -216,14 +207,14 @@ function displayArea(coordinates, name) {
  });
 
  // 다각형에 mousemove 이벤트를 등록하고 이벤트가 발생하면 커스텀 오버레이의 위치를 변경합니다 
- daum.maps.event.addListener(polygon, 'mousemove', function(mouseEvent) {
+ kakao.maps.event.addListener(polygon, 'mousemove', function(mouseEvent) {
 
      customOverlay.setPosition(mouseEvent.latLng);
  });
 
  // 다각형에 mouseout 이벤트를 등록하고 이벤트가 발생하면 폴리곤의 채움색을 원래색으로 변경합니다
  // 커스텀 오버레이를 지도에서 제거합니다 
- daum.maps.event.addListener(polygon, 'mouseout', function() {
+ kakao.maps.event.addListener(polygon, 'mouseout', function() {
      polygon.setOptions({
          fillColor : '#fff'
      });
@@ -231,7 +222,7 @@ function displayArea(coordinates, name) {
  });
 
  // 다각형에 click 이벤트를 등록하고 이벤트가 발생하면 해당 지역 확대을 확대합니다.
- daum.maps.event.addListener(polygon, 'click', function() {
+ kakao.maps.event.addListener(polygon, 'click', function() {
      
      // 현재 지도 레벨에서 2레벨 확대한 레벨
      var level = map.getLevel()-2;
@@ -244,30 +235,9 @@ function displayArea(coordinates, name) {
      deletePolygon(polygons);                    //폴리곤 제거      
  });
 }
-
-function centroid (points) {
-    var i, j, len, p1, p2, f, area, x, y;
- 
-    area = x = y = 0;
- 
-    for (i = 0, len = points.length, j = len - 1; i < len; j = i++) {
-            p1 = points[i];
-            p2 = points[j];
- 
-            f = p1.y * p2.x - p2.y * p1.x;
-            x += (p1.x + p2.x) * f;
-            y += (p1.y + p2.y) * f;
-            area += f * 3;
-    }
-    return new daum.maps.LatLng(x / area, y / area);
-}
-function deletePolygon(polygons) {
-    for (var i = 0; i < polygons.length; i++) {
-        polygons[i].setMap(null);
-    }
-    polygons = [];
-}
-
+    
+//map.setDraggable(false);
+//map.setZoomable(false);
 </script>
 </body>
 </html>
