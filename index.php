@@ -8028,16 +8028,15 @@ function displayArea(area) {
 
       displayLevel();
       
+      function deletePolygon(polygons) {
+        for (var i = 0; i < polygons.length; i++) {
+            polygons[i].setMap(null);
+        }
+        polygons = [];
+      }
+      deletePolygon(polygons);
+
       });
-    deletePolygon(polygons);
-
-
-   function deletePolygon(polygons) {
-    for (var i = 0; i < polygons.length; i++) {
-        polygons[i].setMap(null);
-    }
-    polygons = [];
-  } 
 }
 
 map.setDraggable(false);
