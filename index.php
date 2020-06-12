@@ -8020,7 +8020,7 @@ function displayArea(area) {
     }); 
 
     // 다각형에 click 이벤트를 등록하고 이벤트가 발생하면 다각형의 이름과 면적을 인포윈도우에 표시합니다 
-    daum.maps.event.addListener(polygon, 'click', function() {
+    kakao.maps.event.addListener(polygon, 'click', function() {
         
         // 현재 지도 레벨에서 2레벨 확대한 레벨
         var level = map.getLevel()-2;
@@ -8032,7 +8032,7 @@ function displayArea(area) {
  
         deletePolygon(polygons);                    //폴리곤 제거      
     });
-function centroid (points) {
+  function centroid (points) {
     var i, j, len, p1, p2, f, area, x, y;
  
     area = x = y = 0;
@@ -8046,7 +8046,7 @@ function centroid (points) {
             y += (p1.y + p2.y) * f;
             area += f * 3;
     }
-    return new daum.maps.LatLng(x / area, y / area);
+    return new kakao.maps.LatLng(x / area, y / area);
   }
 }
 
