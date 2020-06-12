@@ -8032,8 +8032,6 @@ function displayArea(area) {
  
         deletePolygon(polygons);                    //폴리곤 제거      
     });
-
-}
 function centroid (points) {
     var i, j, len, p1, p2, f, area, x, y;
  
@@ -8050,6 +8048,8 @@ function centroid (points) {
     }
     return new daum.maps.LatLng(x / area, y / area);
   }
+}
+
 map.setDraggable(false);
 //map.setZoomable(false);
 </script>
