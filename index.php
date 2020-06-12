@@ -8027,9 +8027,9 @@ function displayArea(area) {
       map.setLevel(level);
 
       displayLevel();
-      deletePolygon(polygons);
+      
       });
-
+    deletePolygon(polygons);
 
 
    function deletePolygon(polygons) {
