@@ -8029,7 +8029,7 @@ function displayArea(area) {
       displayLevel();
       });
     
-    function centroid (points) {
+    /*function centroid (points) {
     var i, j, len, p1, p2, f, area, x, y;
  
     area = x = y = 0;
@@ -8044,7 +8044,7 @@ function displayArea(area) {
             area += f * 3;
     }
     return new kakao.maps.LatLng(x / area, y / area);
-}
+    }*/
 }
 
 map.setDraggable(false);
