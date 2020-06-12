@@ -7983,6 +7983,7 @@ for (var i = 0, len = areas.length; i < len; i++) {
 
 // 다각형을 생상하고 이벤트를 등록하는 함수입니다
 function displayArea(area) {
+  var points = [];
 
     // 다각형을 생성합니다 
     var polygon = new kakao.maps.Polygon({
@@ -8026,8 +8027,17 @@ function displayArea(area) {
       map.setLevel(level);
 
       displayLevel();
+      deletePolygon(polygons);
       });
-    
+
+
+
+   function deletePolygon(polygons) {
+    for (var i = 0; i < polygons.length; i++) {
+        polygons[i].setMap(null);
+    }
+    polygons = [];
+  } 
 }
 
 map.setDraggable(false);
